@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">ELwensh</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="get_a_truck">Get A Truck</string>
+    <string name="confirm_pickup">Confirm Pickup</string>
+    <string name="current_location">Current Location</string>
+    <string name="government_location">Government Location</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_main2">Main2Activity</string>
+</resources>

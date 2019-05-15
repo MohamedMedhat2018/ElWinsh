@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activities.MainActivity"
+    tools:showIn="@layout/fragment_map">
+
+
+    <RelativeLayout
+        android:id="@+id/content_base"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Spinner
+            android:id="@+id/service_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="135dp"
+            android:background="@drawable/rounded_border"
+            android:visibility="invisible" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/map_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/gps_btn"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#FFFFFF"
+            android:padding="150dp"
+            android:scaleType="center"
+            android:src="@drawable/map_type"
+            app:fabSize="mini" />
+
+        <!--floating action btn-->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/gps_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/btnGetTruck"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#FFFFFF"
+            android:padding="150dp"
+            android:scaleType="center"
+            android:src="@drawable/cur_location"
+            app:fabSize="mini" />
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/btnGetTruck"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/confirm_btn"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp">
+
+            <LinearLayout
+                android:id="@+id/get_ruck_Layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="6dp"
+                android:weightSum="100">
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="30"-->
+                <!--android:gravity="left">-->
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/yellow_truck32" />
+
+                <!--</LinearLayout>-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="5dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="6dp"
+                    android:text="@string/get_a_truck"
+                    android:textSize="16sp"
+                    android:textStyle="normal"
+
+
+                    />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <!--</LinearLayout>-->
+
+        <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:drawableLeft="@drawable/yellowtruck"-->
+        <!--android:text="Get a Truck"-->
+        <!--android:layout_marginRight="15dp"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_marginBottom="135dp"-->
+        <!--android:textColor="#000"-->
+        <!--android:textSize="20sp"-->
+        <!--android:paddingTop="15dp"-->
+        <!--android:paddingBottom="5dp"-->
+        <!--android:drawablePadding="15dp"-->
+        <!--android:textStyle="bold"/>-->
+
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Get a Truck"-->
+        <!--android:paddingTop="15dp"-->
+        <!--android:paddingBottom="15dp"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingRight="10dp"-->
+        <!--android:textColor="#000"-->
+        <!--android:textStyle="bold"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_margin="50dp"-->
+        <!--android:background="@drawable/test1"-->
+        <!--android:elevation="8dp"-->
+        <!--/>-->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/confirm_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_border2"
+                android:text="@string/confirm_pickup"
+                android:textAllCaps="false"
+                android:textColor="#ffffff"
+
+                android:textSize="18sp"
+                android:textStyle="normal" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <include
+            android:id="@+id/fakeView"
+            layout="@layout/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="?actionBarSize"
+            android:visibility="invisible" />
+
+
+        <include
+            layout="@layout/current_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fakeView"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/center"
+
+            />
+
+
+    </RelativeLayout>
+
+    <!--<include-->
+    <!--layout="@layout/bottom_nav"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="70dp"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--&gt;-->
+    <!--</include>-->
+
+</RelativeLayout>

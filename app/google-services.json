@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "298632770021",
+    "firebase_url": "https://elwensh-f6881.firebaseio.com",
+    "project_id": "elwensh-f6881",
+    "storage_bucket": "elwensh-f6881.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:298632770021:android:058d957df9ee8038",
+        "android_client_info": {
+          "package_name": "com.beyond_tech.elwensh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "298632770021-gta7m6dc5hqsr78nosh3tfb9o2r45dt5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beyond_tech.elwensh",
+            "certificate_hash": "4f619a7af19d11a7f7f9cdd3ec34a65e257f4ae0"
+          }
+        },
+        {
+          "client_id": "298632770021-1o2h7p4hrsdvohf9csea5neqju491cmr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC54iVapk2qN2Plz17eVSoKL9jc4fGybp8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "298632770021-1o2h7p4hrsdvohf9csea5neqju491cmr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
