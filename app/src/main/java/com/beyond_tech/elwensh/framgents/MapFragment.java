@@ -200,6 +200,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
 
     }
 
+
+
     private void getRectOfView() {
 
         Rect rectf = new Rect();
