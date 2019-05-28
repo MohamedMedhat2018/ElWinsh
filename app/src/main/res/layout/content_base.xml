@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".activities.MainActivity"
-    tools:showIn="@layout/fragment_map">
+    tools:context=".activities.main.MainActivity"
+    tools:showIn="@layout/fragment_user_map">
 
 
     <RelativeLayout
@@ -32,9 +32,9 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/gps_btn"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="12dp"
-            android:backgroundTint="#FFFFFF"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="25dp"
+            android:backgroundTint="@color/colorAccent2"
             android:padding="150dp"
             android:scaleType="center"
             android:src="@drawable/map_type"
@@ -45,11 +45,11 @@
             android:id="@+id/gps_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/btnGetTruck"
+            android:layout_above="@id/CardViewGetTruck"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
-            android:backgroundTint="#FFFFFF"
+            android:layout_marginRight="25dp"
+            android:layout_marginBottom="25dp"
+            android:backgroundTint="@color/colorAccent2"
             android:padding="150dp"
             android:scaleType="center"
             android:src="@drawable/cur_location"
@@ -57,51 +57,118 @@
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/btnGetTruck"
+            android:id="@+id/CardViewGetTruck"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/confirm_btn"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginBottom="@dimen/margin_bottom_et"
+            android:clickable="true"
+            android:focusable="true"
             app:cardCornerRadius="10dp"
             app:cardElevation="5dp">
 
             <LinearLayout
-                android:id="@+id/get_ruck_Layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="6dp"
-                android:weightSum="100">
 
-                <!--<LinearLayout-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_weight="30"-->
-                <!--android:gravity="left">-->
+                >
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/rl"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/yellow_truck32" />
+                    android:layout_weight="1"
 
-                <!--</LinearLayout>-->
+                    >
 
-                <TextView
-                    android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/get_ruck_Layout_main"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        android:visibility="gone"
+                        android:weightSum="100">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="2dp"
+                            android:background="@drawable/yellow_truck32"
+
+                            />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="5dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
+                            android:text="@string/get_a_truck"
+                            android:textSize="16sp"
+                            android:textStyle="normal" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/get_ruck_Layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:padding="8dp"
+                        android:visibility="visible"
+
+                        >
+
+                        <ImageView
+                            android:id="@+id/iv_truck1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/yellow_truck32"
+                            android:visibility="visible" />
+
+                        <TextView
+                            android:id="@+id/tv_truck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="3dp"
+                            android:paddingTop="6dp"
+                            android:paddingBottom="6dp"
+                            android:text="@string/get_a_truck"
+                            android:textSize="16sp"
+                            android:textStyle="normal"
+                            android:visibility="visible" />
+
+                        <ImageView
+                            android:id="@+id/iv_truck2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/yellow_truck32"
+                            android:visibility="invisible" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_truck2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:text="@string/get_a_truck"
+                        android:textSize="16sp"
+                        android:textStyle="normal"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawablePadding="5dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:text="@string/get_a_truck"
-                    android:textSize="16sp"
-                    android:textStyle="normal"
-
-
-                    />
-
+                    android:layout_weight="1" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -146,20 +213,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginBottom="@dimen/margin_bottom_et"
             app:cardCornerRadius="10dp"
             app:cardElevation="5dp">
 
             <Button
+                android:id="@+id/get_pickup_point"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_border2"
                 android:text="@string/confirm_pickup"
                 android:textAllCaps="false"
-                android:textColor="#ffffff"
-
+                android:textColor="@color/colorAccent2"
                 android:textSize="18sp"
                 android:textStyle="normal" />
 
@@ -180,9 +247,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/fakeView"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="@dimen/margin_left"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="@dimen/margin_right" />
 
 
         <ImageView
@@ -192,6 +259,14 @@
             android:src="@drawable/center"
 
             />
+
+        <!--<androidx.appcompat.widget.SwitchCompat-->
+            <!--android:id="@+id/switchDriverStatus"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true"-->
+            <!---->
+            <!--/>-->
 
 
     </RelativeLayout>

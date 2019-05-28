@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <integer name="activity_transition_time">1500</integer>
+    <integer name="activity_transition_time1">1200</integer>
+    <integer name="activity_transition_time2">1300</integer>
+    <integer name="activity_transition_time3">2400</integer>
+    <integer name="activity_transition_time4">2700</integer>
+
+</resources>

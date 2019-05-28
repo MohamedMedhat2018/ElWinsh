@@ -6,10 +6,28 @@
 
 </style>
 
-
     <style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:background">@android:color/transparent</item>
+    </style>
 
+    <!--not usage-->
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+
+        <item name="android:textColorPrimary">@android:color/white
+        </item>   <!-- Text color of Toolbar Title -->
+        <item name="android:textColorSecondary">@android:color/white</item> <!-- Color of Overflow Menu ( 3 dots icon )
+                                                                                    and color of Navigation Drawer Icon-->
+    </style>
+
+    <style name="MyEditTextTheme">
+        <!-- Used for the bottom line when not selected / focused -->
+        <item name="colorControlNormal">@color/secondaryColor</item>
+        <item name="android:colorControlActivated">@color/secondaryColor</item>
+        <item name="android:colorControlHighlight">@color/colorControlHighlight</item>
+        <item name="android:textColorHint">@color/White</item>
+        <!-- colorControlActivated & colorControlHighlight use the colorAccent color by default -->
     </style>
 
 

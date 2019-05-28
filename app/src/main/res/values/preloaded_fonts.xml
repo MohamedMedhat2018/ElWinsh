@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="preloaded_fonts" translatable="false">
+        <item>@font/akronim</item>
         <item>@font/bad_script</item>
+        <item>@font/cookie</item>
+        <item>@font/unifrakturmaguntia</item>
+        <item>@font/yellowtail</item>
     </array>
 </resources>

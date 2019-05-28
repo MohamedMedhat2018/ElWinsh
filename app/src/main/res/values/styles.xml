@@ -10,14 +10,16 @@
         <!-- Parent theme for all Pre-Lollipop and Lollipop above versions i.e. For all devices. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/secondaryColor</item>
 
     </style>
 
 
-    <style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.Light.NoActionBar"></style>
+    <!--<style name="AppTheme.AppBarOverlay" parent="Theme.AppCompat.Light.NoActionBar">-->
+    <!--</style>-->
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!--not usage-->
+    <!--<style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
 
 
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
@@ -28,20 +30,37 @@
                                                                                     and color of Navigation Drawer Icon-->
     </style>
 
-    <style name="PopupTheme" parent="ThemeOverlay.AppCompat.Light">
 
-        <item name="android:textColorPrimary">#000
-        </item>    <!-- Text color of Overflow Menu items-->
-        <item name="android:background">#000</item>        <!-- Background of Overflow Menu -->
+
+
+
+
+    <style name="MyEditTextTheme">
+        <!-- Used for the bottom line when not selected / focused -->
+        <item name="colorControlNormal">@color/secondaryColor</item>
+        <!--<item name="android:textColorHighlight">@color/Green</item>-->
+        <item name="android:textColorHint">@color/White</item>
+        <!--<item name="android:textColorHintInverse">@color/Green</item>-->
+        <!-- colorControlActivated & colorControlHighlight use the colorAccent color by default -->
     </style>
 
-    <style name="MaterialTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
 
-    <style name="MaterialTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="MaterialTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <!--not usage-->
+    <!--<style name="PopupTheme" parent="ThemeOverlay.AppCompat.Light">-->
+
+    <!--<item name="android:textColorPrimary">#000-->
+    <!--</item>    &lt;!&ndash; Text color of Overflow Menu items&ndash;&gt;-->
+    <!--<item name="android:background">#000</item>        &lt;!&ndash; Background of Overflow Menu &ndash;&gt;-->
+    <!--</style>-->
+
+    <!--<style name="MaterialTheme.NoActionBar">-->
+    <!--<item name="windowActionBar">false</item>-->
+    <!--<item name="windowNoTitle">true</item>-->
+    <!--</style>-->
+
+    <!--<style name="MaterialTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />-->
+
+    <!--<style name="MaterialTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />-->
 
 </resources>

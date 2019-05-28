@@ -1,22 +1,35 @@
 package com.beyond_tech.elwensh.framgents;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Point;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beyond_tech.elwensh.R;
+import com.beyond_tech.elwensh.utils.Utils;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -44,6 +57,7 @@ import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -60,6 +74,56 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final Float DEFAULT_ZOOM = 16f;
     LocationManager manager;
+    boolean flag = true;
+    CardView cardView;
+    private ImageView imageView_truck1, imageView_truck2;
+    private TextView textView_truck;
+    private Handler handler = new Handler();
+    private int counter = 0, max, tansX1, tansX2, width;
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+//            max = width / 4;
+//            Log.e(TAG, "max  = " + max);
+
+//            centreX = (int) (cardView.getX() + cardView.getWidth() / 2);
+//            centreY=imageView.getY() + imageView.getHeight() / 2;
+//            Log.e(TAG, "centreX  = " + centreX);
+
+//            max = last;
+
+            if (flag) {
+                flag = !flag;
+                tansX1 = (int) textView_truck.getTranslationX();
+                tansX2 = (int) imageView_truck1.getTranslationX();
+            }
+
+            if (textView_truck.getTranslationX() < width) {
+                textView_truck.setTranslationX(textView_truck.getTranslationX() + counter);
+                imageView_truck2.setTranslationX(imageView_truck2.getTranslationX() + counter);
+                Log.e(TAG, "Tran = " + textView_truck.getTranslationX());
+                counter++;
+                handler.removeCallbacks(runnable);
+                startTranslation();
+//                Log.e(TAG, String.valueOf(counter));
+            } else {
+                if (textView_truck.getTranslationX() >= width) {
+//                    Log.e(TAG, "max = " + String.valueOf(max));
+//                    imageView_truck2.setVisibility(View.GONE);
+//                    imageView_truck1.setVisibility(View.VISIBLE);
+//                    textView_truck.setTranslationX(tansX1);
+//                    imageView_truck1.setTranslationX(tansX2);
+//                    if (imageView_truck1.getVisibility() == View.VISIBLE) {
+//                        Toast.makeText(getActivity(), "Visi", Toast.LENGTH_SHORT).show();
+//                    }
+                    getView().findViewById(R.id.get_ruck_Layout_main).setVisibility(View.VISIBLE);
+                    getView().findViewById(R.id.get_ruck_Layout).setVisibility(View.GONE);
+                    handler.removeCallbacks(runnable);
+                }
+            }
+
+        }
+    };
     private SupportMapFragment supportMapFragment;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap mMap;
@@ -71,140 +135,150 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     //    boolean GpsStatus;
     //    Intent intent1;
     private GoogleApiClient googleApiClient;
-
     private List<Address> list = new ArrayList<>();
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        Log.d(TAG, "onMapReady: Map is Ready");
-        //mMap for Map in hole class
-        mMap = googleMap;
-//        GoogleMap.OnCameraMoveStartedListener,
-//                GoogleMap.OnCameraMoveListener,
-//                GoogleMap.OnCameraMoveCanceledListener,
-//                GoogleMap.OnCameraIdleListener
-
-        mMap.setOnCameraMoveCanceledListener(this);
-        mMap.setOnCameraMoveListener(this);
-        mMap.setOnCameraIdleListener(this);
-        mMap.setOnCameraMoveStartedListener(this);
+    private Button btnPickUp;
 
 
-        if (mLocationPermissionsGranted) {
-            mMap.clear(); //clear old markers
-//            CheckGpsStatus();
-            getDeviceLocation();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED && getContext().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    return;
-                }
-            }
-            mMap.setMyLocationEnabled(false);
-            mMap.getUiSettings().setCompassEnabled(false);
-            //getView
-            LocationUsingGps(getView());
-            ChangeType(this.getView());
+    public int getViewWidth(View view) {
+        WindowManager wm =
+                (WindowManager) view.getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+
+        int deviceWidth;
+
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            Point size = new Point();
+            display.getSize(size);
+            deviceWidth = size.x;
+        } else {
+            deviceWidth = display.getWidth();
         }
+
+        int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(deviceWidth, View.MeasureSpec.AT_MOST);
+        int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        view.measure(widthMeasureSpec, heightMeasureSpec);
+//        return view.getMeasuredHeight();
+        return view.getMeasuredWidth();
     }
 
-//    public void CheckGpsStatus(){
-//        manager = (LocationManager)getContext().getSystemService(Context.LOCATION_SERVICE);
-//        if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER) && hasGPSDevice(getContext())) {
-//            Toast.makeText(getContext(),"Gps already enabled",Toast.LENGTH_SHORT).show();
-//            getActivity().finish();
-//        }
-//        // Todo Location Already on  ... end
-//        if(!hasGPSDevice(getContext())){
-//            Toast.makeText(getContext(),"Gps not Supported",Toast.LENGTH_SHORT).show();
-//        }
-//        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER) && hasGPSDevice(getContext())) {
-//            Log.e("keshav","Gps already enabled");
-//            Toast.makeText(getContext(),"Gps not enabled",Toast.LENGTH_SHORT).show();
-//            enableLoc();
-//        }else{
-//            Log.e("keshav","Gps already enabled");
-//            Toast.makeText(getContext(),"Gps already enabled",Toast.LENGTH_SHORT).show();
-//        }
-////        GpsStatus = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-////        Log.d(TAG, "Test test ");
-////        if(GpsStatus == true)
-////        {
-////            intent1 = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-////            startActivity(intent1);
-////            Log.d(TAG, "Test test ");
-////        }
-//    }
-//    private void enableLoc() {
-//
-//        if (googleApiClient == null) {
-//            googleApiClient = new GoogleApiClient.Builder(getContext())
-//                    .addApi(LocationServices.API)
-//                    .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
-//                        @Override
-//                        public void onConnected(Bundle bundle) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onConnectionSuspended(int i) {
-//                            googleApiClient.connect();
-//                        }
-//                    })
-//                    .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
-//                        @Override
-//                        public void onConnectionFailed(ConnectionResult connectionResult) {
-//
-//                            Log.d("Location error", "Location error " + connectionResult.getErrorCode());
-//                        }
-//                    }).build();
-//            googleApiClient.connect();
-//
-//            LocationRequest locationRequest = LocationRequest.create();
-//            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-//            locationRequest.setInterval(30 * 1000);
-//            locationRequest.setFastestInterval(5 * 1000);
-//            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-//                    .addLocationRequest(locationRequest);
-//
-//            builder.setAlwaysShow(true);
-//
-//            PendingResult<LocationSettingsResult> result =
-//                    LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
-//            result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-//                @Override
-//                public void onResult(LocationSettingsResult result) {
-//                    final Status status = result.getStatus();
-//                    switch (status.getStatusCode()) {
-//                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-//                            try {
-//                                // Show the dialog by calling startResolutionForResult(),
-//                                // and check the result in onActivityResult().
-//                                status.startResolutionForResult(getActivity(), LOCATION_PERMISSION_REQUEST_CODE);
-//
-//                                getActivity().finish();
-//                            } catch (IntentSender.SendIntentException e) {
-//                                // Ignore the error.
-//                            }
-//                            break;
-//                    }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+//        return inflater.inflate(R.layout.fragment_user_map, container, false);
+        return inflater.inflate(R.layout.fragment_user_map, null);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Log.i(TAG, "onViewCreated");
+        findViews();
+        width = getViewWidth(cardView);
+        Log.e(TAG, "width  ==  " + width / 2);
+        //and then get the width of getTruckLayout
+        //then subtract that form screen width to get final width
+//        int width2 = getViewWidth(getView().findViewById(R.id.get_ruck_Layout_main));
+//        int res = width / 2 - width2;
+        int w = (width) / 2;// i want let it to gone forever at center so added 30
+        width = (int) (w - w / 2.5);
+//        max = getViewWidth(cardView) / 2;
+        getWidthOfGetTruckLayout();
+        getLocationPermission();
+//        hideSoftKeyboard();
+//        LocationUsingGps(this.getView());
+        initPlaces();
+//        btnPickUp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+//                Intent intent;
+//                try {
+//                    intent =builder.build(getActivity());
+//                    startActivityForResult(intent,111);
+//                } catch (GooglePlayServicesRepairableException e) {
+//                    e.printStackTrace();
+//                } catch (GooglePlayServicesNotAvailableException e) {
+//                    e.printStackTrace();
 //                }
-//            });
-//        }
-//    }
+//            }
+//        });
+
+    }
+
+    private int getWidthOfGetTruckLayout() {
+
+        final int[] width = new int[1];
+        ViewTreeObserver vto = cardView.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+                    cardView.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                } else {
+                    cardView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+                width[0] = cardView.getMeasuredWidth();
+                int height = cardView.getMeasuredHeight();
+
+            }
+        });
+        return width[0];
+    }
+
+    private void startTranslation() {
+        handler.postDelayed(runnable, 200);
+    }
+
+    private void findViews() {
+        gpsBtn = getView().findViewById(R.id.gps_btn);
+//        gpsBtn = this.getActivity().findViewById(R.id.gps_btn);
+        mapTypeBtn = getView().findViewById(R.id.map_type);
+//        mSearchText = (EditText) view.findViewById(R.id.input_search_address);
+        imageView_truck1 = getView().findViewById(R.id.iv_truck1);
+        imageView_truck2 = getView().findViewById(R.id.iv_truck2);
+        textView_truck = getView().findViewById(R.id.tv_truck);
+        cardView = getView().findViewById(R.id.CardViewGetTruck);
+        btnPickUp = getView().findViewById(R.id.get_pickup_point);
+    }
+
+    private void startAnimation() {
+
+//        Animation anim_scale = AnimationUtils.loadAnimation(this, R.anim.anim_scale);
+//        viewImage.startAnimation(anim_scale);
+        final int millisec = 700;
+        YoYo.with(Techniques.FadeOut)
+                .delay(2000)
+                .duration(millisec)
+                .repeat(0)
+                .onEnd(new YoYo.AnimatorCallback() {
+                    @Override
+                    public void call(Animator animator) {
+                        imageView_truck1.setVisibility(View.INVISIBLE);
+                        YoYo.with(Techniques.FadeIn)
+//                                .duration(millisec)
+                                .duration(millisec / 2)
+                                .repeat(0)
+                                .onEnd(new YoYo.AnimatorCallback() {
+                                    @Override
+                                    public void call(Animator animator) {
+                                        imageView_truck2.setVisibility(View.VISIBLE);
+                                        //start translation
+                                        startTranslation();
+                                    }
+                                })
+                                .playOn(imageView_truck2);
+                    }
+                })
+                .playOn(imageView_truck1);
 
 
-//    private boolean hasGPSDevice(Context context) {
-//        final LocationManager mgr = (LocationManager) context
-//                .getSystemService(Context.LOCATION_SERVICE);
-//        if (mgr == null)
-//            return false;
-//        final List<String> providers = mgr.getAllProviders();
-//        if (providers == null)
-//            return false;
-//        return providers.contains(LocationManager.GPS_PROVIDER);
-//    }
+    }
 
     private void initMap() {
 //        assert getFragmentManager() != null;
@@ -216,15 +290,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         //it will call onMapReady() Automatically
         supportMapFragment.getMapAsync(MapFragment.this);
         //map setting
-//                getDeviceLocation();
+//                getFusedLocationProviderClient();
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
-
+    //for autoComplete
     private void initPlaces() {
 
         //        // Initialize Places.
@@ -240,79 +309,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         if (!Places.isInitialized()) {
             Places.initialize(MapFragment.this.getActivity(),
                     getString(R.string.google_maps_key));
-            Toast.makeText(getActivity(), "isInitialized", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "isInitialized", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
         }
         initAutoCompleteFragment();
     }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        return inflater.inflate(R.layout.fragment_map, container, false);
-        return inflater.inflate(R.layout.fragment_map, null);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Log.i(TAG, "onViewCreated");
-        findViews();
-        getLocationPermission();
-        init();
-//        LocationUsingGps(this.getView());
-        initPlaces();
-    }
-
-    private void findViews() {
-        gpsBtn = getView().findViewById(R.id.gps_btn);
-//        gpsBtn = this.getActivity().findViewById(R.id.gps_btn);
-        mapTypeBtn = getView().findViewById(R.id.map_type);
-//        mSearchText = (EditText) view.findViewById(R.id.input_search_address);
-    }
-
-
-//    private void displayLocationSettingsRequest(Context context) {
-//        GoogleApiClient googleApiClient = new GoogleApiClient.Builder(context)
-//                .addApi(LocationServices.API).build();
-//        googleApiClient.connect();
-//
-//        LocationRequest locationRequest = LocationRequest.create();
-//        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-//        locationRequest.setInterval(10000);
-//        locationRequest.setFastestInterval(10000 / 2);
-//
-//        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
-//        builder.setAlwaysShow(true);
-//
-//        PendingResult<LocationSettingsResult> result = LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
-//        result.setResultCallback(.setResultCallback(new ResultCallback<LocationSettingsResult>() {
-//            @Override
-//            public void onResult(LocationSettingsResult result) {
-//                final Status status = result.getStatus();
-//                switch (status.getStatusCode()) {
-//                    case LocationSettingsStatusCodes.SUCCESS:
-//                        Log.i(TAG, "All location settings are satisfied.");
-//                        break;
-//                    case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-//                        Log.i(TAG, "Location settings are not satisfied. Show the user a dialog to upgrade location settings ");
-//
-//                        try {
-//                            // Show the dialog by calling startResolutionForResult(), and check the result
-//                            // in onActivityResult().
-//                            status.startResolutionForResult(getActivity(), LOCATION_PERMISSION_REQUEST_CODE);
-//                        } catch (IntentSender.SendIntentException e) {
-//                            Log.i(TAG, "PendingIntent unable to execute request.");
-//                        }
-//                        break;
-//                    case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
-//                        Log.i(TAG, "Location settings are inadequate, and cannot be fixed here. Dialog not created.");
-//                        break;
-//                }
-//            });
-//        });
-
 
     private void initAutoCompleteFragment() {
 //        / Initialize the AutocompleteSupportFragment.
@@ -334,30 +336,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
                 Log.i(TAG, "An error occurred: " + status);
             }
         });
-    }
-
-    private void init() {
-        Log.d(TAG, "init: initializing");
-
-//        mSearchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
-//                if(actionId == EditorInfo.IME_ACTION_SEARCH
-//                        || actionId == EditorInfo.IME_ACTION_DONE
-//                        || keyEvent.getAction() == KeyEvent.ACTION_DOWN
-//                        || keyEvent.getAction() == KeyEvent.KEYCODE_ENTER){
-//
-//
-//                    mMap.clear();
-//                    //execute our method for searching
-//                    geoLocate();
-//                }
-//
-//                return false;
-//            }
-//        });
-
-        hideSoftKeyboard();
     }
 
     private void geoLocate() {
@@ -385,13 +363,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     }
 
     private void getDeviceLocation() {
-        Log.d(TAG, "getDeviceLocation: getting the devices current location");
-
+        Log.d(TAG, "getFusedLocationProviderClient: getting the devices current location");
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getContext());
-
         try {
             if (mLocationPermissionsGranted) {
-
                 final Task location = mFusedLocationProviderClient.getLastLocation();
                 location.addOnCompleteListener(new OnCompleteListener() {
                     @Override
@@ -450,7 +425,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
                 });
             }
         } catch (SecurityException e) {
-            Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage());
+            Log.e(TAG, "getFusedLocationProviderClient: SecurityException: " + e.getMessage());
         }
 
     }
@@ -459,6 +434,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
     public void onPause() {
         super.onPause();
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void moveCamera(LatLng latLng, Float zoom, String title) {
@@ -482,7 +477,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         mMap.addMarker(marker);
 
 
-        hideSoftKeyboard();
+        startAnimation();
 
     }
 
@@ -537,7 +532,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
         }
     }
 
-    //get Latlng
+    //get Latlng ???
     public void getAddress(double lat, double lng) {
         Geocoder geocoder = new Geocoder(this.getActivity(), Locale.getDefault());
         try {
@@ -575,27 +570,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
 
     public void ChangeType(View view) {
 
-
         mapTypeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (mMap.getMapType() == GoogleMap.MAP_TYPE_NORMAL) {
-
-                    mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-
-                } else if (mMap.getMapType() == GoogleMap.MAP_TYPE_HYBRID) {
-                    mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-                }
-
+                Utils.getInstance().changeMapType(mMap);
             }
         });
 
-
-    }
-
-    public void hideSoftKeyboard() {
-        this.getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @Override
@@ -618,6 +599,41 @@ public class MapFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public void onCameraMoveStarted(int i) {
-
     }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Log.d(TAG, "onMapReady: Map is Ready");
+        //mMap for Map in hole class
+        mMap = googleMap;
+//        GoogleMap.OnCameraMoveStartedListener,
+//                GoogleMap.OnCameraMoveListener,
+//                GoogleMap.OnCameraMoveCanceledListener,
+//                GoogleMap.OnCameraIdleListener
+
+        mMap.setOnCameraMoveCanceledListener(this);
+        mMap.setOnCameraMoveListener(this);
+        mMap.setOnCameraIdleListener(this);
+        mMap.setOnCameraMoveStartedListener(this);
+
+
+        if (mLocationPermissionsGranted) {
+            mMap.clear(); //clear old markers
+//            CheckGpsStatus();
+            getDeviceLocation();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED && getContext().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+            }
+            mMap.setMyLocationEnabled(false);
+            mMap.getUiSettings().setCompassEnabled(false);
+            //getView
+            LocationUsingGps(getView());
+            ChangeType(this.getView());
+        }
+    }
+
 }

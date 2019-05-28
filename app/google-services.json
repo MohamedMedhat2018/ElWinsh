@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "298632770021-7rigjnpit26q9v8097nt9ppkljt441jl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beyond_tech.elwensh",
+            "certificate_hash": "34299e431f2dcb135dcabbf0f647073848dd12de"
+          }
+        },
+        {
           "client_id": "298632770021-gta7m6dc5hqsr78nosh3tfb9o2r45dt5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

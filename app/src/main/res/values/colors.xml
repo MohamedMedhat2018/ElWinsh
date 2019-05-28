@@ -2,29 +2,43 @@
 <resources>
 
 
-    <color name="colorPrimary">#8BC34A</color>
+    <color name="colorPrimary">#016C7E</color>
+
+    <!--016C7E mr/Qasem-->
+    <!--689F38-->
+    <!--8BC34A main -->
 
     <!--C800BCD4-->
     <!--6AA121-->
-
     <!--<color name="colorPrimary">#00BCD4</color>-->
     <!--FF02BDD5-->
-    <color name="colorPrimaryDark">#689F38</color>
+    <color name="colorPrimaryDark">#002B31</color>
+
+    <!--matrial 002B31-->
+    <!--003630 mr/Qasem-->
     <!--<color name="colorPrimaryDark">#0097A7</color>-->
     <!--0097A7-->
+    306754
+    <!--689F38 main -->
+
     <color name="colorAccent">#D3717171</color>
 
-    <color name="Orange">#FFCA28</color>
+    <color name="colorAccent2">#FFFFFF</color>
+
+    <color name="secondaryColor">#FF9800</color>
+
+    <!--FFCA28-->
+
+    <color name="app_name_color_part1">#FF9902</color>
+
 
     <color name="toolbarColor">#8BC34A</color>
-    <color name="secondaryColor">#FFD203</color>
+    <!--<color name="secondaryColor">#FFD203</color>-->
 
 
     <color name="secondaryColor2">#26A69A</color>
 
-
-
-
+    <color name="colorControlHighlight">#D1D0CE</color>
 
 
 
@@ -49,7 +63,7 @@
     <color name="Granite">#837E7C</color>
     <color name="Battleship_Gray">#848482</color>
     <color name="Gray_Cloud">#B6B6B4</color>
-    <color name="Gray_Goose">#D1D0CE</color>
+
     <color name="Platinum">#E5E4E2</color>
     <color name="Metallic_Silver">#BCC6CC</color>
     <color name="Blue_Gray">#98AFC7</color>

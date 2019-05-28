@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/highway3"
+    android:orientation="vertical"
+    tools:context=".activities.LoginOrRegisterActivity">
+
+
+    <LinearLayout
+        android:id="@+id/app_name_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!--<RelativeLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<ImageView-->
+        <!--android:layout_width="130dp"-->
+        <!--android:layout_height="130dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginBottom="0dp"-->
+        <!--android:background="@android:color/transparent"-->
+        <!--android:scaleType="fitStart"-->
+        <!--android:src="@mipmap/logo_test" />-->
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="@dimen/logo_width"
+            android:layout_height="@dimen/logo_height"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_border3"
+            android:scaleType="fitStart"
+            android:src="@mipmap/logo_test"
+            android:visibility="invisible" />
+
+        <!--</RelativeLayout>-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/tv_app_name1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="cursive"
+                android:text="@string/app_name_part1"
+                android:textColor="@color/app_name_color_part1"
+                android:textSize="@dimen/text_size"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/tv_app_name2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="cursive"
+                android:text="@string/app_name_part2"
+                android:textColor="@color/colorAccent2"
+                android:textSize="@dimen/text_size"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+
+        </LinearLayout>
+
+
+        <!--<de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--android:id="@+id/profile_image"-->
+        <!--android:layout_width="96dp"-->
+        <!--android:layout_height="96dp"-->
+        <!--android:src="@drawable/logo"-->
+        <!--app:civ_border_color="#FF000000"-->
+        <!--app:civ_border_width="2dp" />-->
+
+        <!--<com.github.abdularis.civ.AvatarImageView-->
+        <!--android:layout_width="60dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:src="@drawable/logo"-->
+        <!--app:avatarBackgroundColor="#1976D2"-->
+        <!--app:strokeColor="#1976D2"-->
+        <!--app:strokeWidth="1dp"-->
+        <!--app:text="B"-->
+        <!--app:textSize="22sp"-->
+        <!--app:view_state="IMAGE" />-->
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:gravity="bottom"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_border2"
+            android:text="@string/sign_in"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent2"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/btn_signUpIntro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/rounded_border2"
+            android:text="@string/sign_up"
+            android:textAllCaps="true"
+            android:textColor="@color/colorAccent2"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

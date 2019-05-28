@@ -1,7 +1,5 @@
 package com.beyond_tech.elwensh.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,20 +9,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.beyond_tech.elwensh.R;
 import com.beyond_tech.elwensh.activities.driver.DriverSigninActivity;
+import com.beyond_tech.elwensh.activities.user.SigninActivity;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class Main2Activity extends AppCompatActivity {
+public class DriverOrCustomerActivity extends AppCompatActivity {
 
-    private Button loginBtn, registerBtn;
+    TextInputEditText emialET, passET;
+    private Button driver, customer;
     private TextView app_name1, app_name2;
     private ImageView logo;
     private Animation animation, animation2, animation3, animation4, animation5;
-
     private TextView signUpTV, signInTV;
-    TextInputEditText emialET, passET;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
 
@@ -32,10 +32,10 @@ public class Main2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main3);
+        setContentView(R.layout.activity_driver_or_customer);
 
-        loginBtn = findViewById(R.id.btn_login);
-        registerBtn = findViewById(R.id.btn_signUpIntro);
+        driver = findViewById(R.id.btn_login);
+        customer = findViewById(R.id.btn_signUpIntro);
         logo = findViewById(R.id.logo);
         app_name1 = findViewById(R.id.tv_app_name1);
         app_name2 = findViewById(R.id.tv_app_name2);
@@ -55,7 +55,7 @@ public class Main2Activity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                loginBtn.setVisibility(View.VISIBLE);
+                driver.setVisibility(View.VISIBLE);
 
             }
 
@@ -72,7 +72,7 @@ public class Main2Activity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                registerBtn.setVisibility(View.VISIBLE);
+                customer.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -130,33 +130,30 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
-        loginBtn.startAnimation(animation);
-        registerBtn.startAnimation(animation2);
+
+        driver.startAnimation(animation);
+        customer.startAnimation(animation2);
         logo.startAnimation(animation3);
         app_name1.startAnimation(animation4);
         app_name2.startAnimation(animation5);
 
-
-
-
-
-
-
-
-
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        driver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signInBtnIntent = new Intent(Main2Activity.this, DriverSigninActivity.class);
+                Intent signInBtnIntent = new Intent(DriverOrCustomerActivity.this, DriverSigninActivity.class);
                 startActivity(signInBtnIntent);
+                finish();
+
             }
         });
 
-        registerBtn.setOnClickListener(new View.OnClickListener() {
+        customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signInBtnIntent = new Intent(Main2Activity.this, RegisterActivity.class);
+                Intent signInBtnIntent = new Intent(DriverOrCustomerActivity.this, SigninActivity.class);
                 startActivity(signInBtnIntent);
+                finish();
+
             }
         });
 

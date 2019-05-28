@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ELwensh</string>
+    <string name="app_name">WINSH</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -12,4 +12,25 @@
     <string name="government_location">Government Location</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="app_name_part2">nsh</string>
+    <string name="app_name_part1">Elwe</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="are_you_a_member">Are you a member?</string>
+    <string name="new_user">New User?</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="enter_place">Enter Place</string>
+    <string name="connection_error">Network connection Error!</string>
+    <string name="i_m_a_driver">I\'m a Driver</string>
+    <string name="i_m_a_customer">I\'m a Customer</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="full_name">Full name</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="location_rationale">Alow Elwinsh to access your device location</string>
+    <string name="sign_out">SignOut</string>
+    <string name="reset_pass">Reset password now</string>
 </resources>

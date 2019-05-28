@@ -1,21 +1,19 @@
-package com.beyond_tech.elwensh.activities;
+package com.beyond_tech.elwensh.activities.driver;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.beyond_tech.elwensh.R;
+import com.beyond_tech.elwensh.activities.forgot.DriverForgotPassActivity;
+import com.beyond_tech.elwensh.activities.main.MainActivity;
 import com.beyond_tech.elwensh.constants.Constants;
-import com.beyond_tech.elwensh.models.Driver;
 import com.beyond_tech.elwensh.utils.Utils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,20 +21,14 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class DriverSigninActivity extends AppCompatActivity {
 
     private static final String TAG = "DriverSigninActivity";
     TextInputEditText emialET, passET;
-    private TextView signUpTV, signInTV;
+    private TextView signUpTV, signInTV, tvForgotPassword;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
-
-    public static boolean isValidEmail(String target) {
-        return (!TextUtils.isEmpty(target) && Patterns.EMAIL_ADDRESS.matcher(target).matches());
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,69 +38,81 @@ public class DriverSigninActivity extends AppCompatActivity {
         signInTV = findViewById(R.id.btn_login_driver);
         emialET = findViewById(R.id.et_email_driver);
         passET = findViewById(R.id.et_pass_driver);
+        tvForgotPassword = findViewById(R.id.tvForgotPassword);
         mAuth = FirebaseAuth.getInstance();
 
-        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user != null) {
-                    Intent SignUpTvIntent = new Intent(DriverSigninActivity.this, MainActivity.class);
-                    startActivity(SignUpTvIntent);
-                }
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            if (user.isEmailVerified()) {
+                Intent signUpTvIntent = new Intent(DriverSigninActivity.this, MainActivity.class);
+                signUpTvIntent.putExtra(Constants.USER_TYPE, Constants.DRIVERS);
+                startActivity(signUpTvIntent);
+                finish();
+            } else {
+//               Toast.makeText(this, "Please verify your email address!", Toast.LENGTH_SHORT).show();
             }
-        };
+        }
+
+
+//        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//
+//            }
+//        };
 
         signInTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.e(TAG, "Test" + emialET.getText());
-                if (isValidEmail(emialET.getText().toString())) {
-                    if (isValidPassword(passET.getText().toString())) {
+                if (Utils.getInstance().isValidEmail(emialET.getText().toString())) {
+                    if (Utils.getInstance().isValidPassword(passET.getText().toString())) {
                         final String email = emialET.getText().toString();
                         final String pass = passET.getText().toString();
 
-                        final AlertDialog alertDialog = Utils.getInstance().progress(DriverSigninActivity.this);
-                        alertDialog.show();
-
-                        mAuth.createUserWithEmailAndPassword(email, pass)
+                        FirebaseAuth.getInstance().signInWithEmailAndPassword(email,
+                                pass)
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                     @Override
                                     public void onSuccess(AuthResult authResult) {
-                                        String user_id = mAuth.getCurrentUser().getUid();
+//                                        spotsDialog.dismiss();
+                                        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                                            if (!FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()) {
+                                                Toast.makeText(DriverSigninActivity.this, "Please verify your email address",
+                                                        Toast.LENGTH_SHORT).show();
+                                                //verifyEmail.setVisibility(View.VISIBLE);
+//                                                llBack.setVisibility(View.VISIBLE);
+//                                                loginMain.setVisibility(View.GONE);
 
-                                        
-                                        Driver driver = new Driver();
-                                        driver.setDriverEmail(email);
-                                        driver.setDriverPassword(pass);
-                                        driver.setDriverFireId(user_id);
+                                            } else {
+                                                //finish();
+//                                Toast.makeText(LoginActivity.this, "Logged in success" +
+//                                        "", Toast.LENGTH_SHORT).show();
+                                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                intent.putExtra(Constants.USER_TYPE, Constants.DRIVERS);
+                                                startActivity(intent);
+                                                finish();
 
-
-                                        FirebaseDatabase.getInstance().getReference(Constants.CONST_APP_ROOT)
-                                                .child(Constants.CONST_DRIVERS)
-                                                .setValue(driver)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Toast.makeText(DriverSigninActivity.this, "Error ", Toast.LENGTH_SHORT).show();
-                                                    }
-                                                });
-                                        alertDialog.dismiss();
+                                            }
+//                            progressLogin.setVisibility(View.GONE);
+//                            login.setText("Login");
+                                        }
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(DriverSigninActivity.this, "Sign up error", Toast.LENGTH_SHORT).show();
-                                        alertDialog.dismiss();
+                                        Log.e(TAG, "onFailure: " + e.getMessage() );
+//                                        Toast.makeText(DriverSigninActivity.this, Constants.NETWORK_ERROR, Toast.LENGTH_SHORT).show();
+//                        SweetDialog.getInstance().error(LoginActivity.this, "Email or password not exist !!");
+                                        Toast.makeText(DriverSigninActivity.this, "Email or password not exist!", Toast.LENGTH_SHORT).show();
+//                        progressLogin.setVisibility(View.GONE);
+//                        login.setText("Login");
+//                                        spotsDialog.dismiss();
+//                        signUp(null);
                                     }
                                 });
+
 
                     } else {
                         passET.setError("Enter valid pass!");
@@ -119,11 +123,22 @@ public class DriverSigninActivity extends AppCompatActivity {
             }
         });
 
+        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent forgotPassIntent = new Intent(DriverSigninActivity.this, DriverForgotPassActivity.class);
+                startActivity(forgotPassIntent);
+                finish();
+//                Utils.getInstance().forgetPassword(getApplicationContext(), emialET.getText().toString());
+            }
+        });
+
         signUpTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent SignUpTvIntent = new Intent(DriverSigninActivity.this, RegisterActivity.class);
-                startActivity(SignUpTvIntent);
+                Intent signUpTvIntent = new Intent(DriverSigninActivity.this, DriverRegisterActivity.class);
+                startActivity(signUpTvIntent);
+                finish();
             }
         });
     }
@@ -131,26 +146,27 @@ public class DriverSigninActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        mAuth.addAuthStateListener(firebaseAuthListener);
+//        mAuth.addAuthStateListener(firebaseAuthListener);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        mAuth.removeAuthStateListener(firebaseAuthListener);
+//        mAuth.removeAuthStateListener(firebaseAuthListener);
     }
+
 
 //    boolean isEmpty(EditText text){
 //        final String email =  emialET.getText().toString();
 //        return TextUtils.isEmpty(email);
 //    }
 
-    private boolean isValidPassword(String pass) {
-        if (!TextUtils.isEmpty(pass) && pass.length() > 6) {
-            return true;
-        }
-        return false;
-    }
+//    private boolean isValidPassword(String pass) {
+//        if (!TextUtils.isEmpty(pass) && pass.length() > 6) {
+//            return true;
+//        }
+//        return false;
+//    }
 
 
 //    public static boolean isEmailValid(String email) {

@@ -1,19 +1,15 @@
 package com.beyond_tech.elwensh.activities.intro;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Handler;
 //import android.support.annotation.Nullable;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.airbnb.lottie.LottieDrawable;
 import com.beyond_tech.elwensh.R;
-import com.beyond_tech.elwensh.activities.MainActivity;
+import com.beyond_tech.elwensh.activities.main.MainActivity;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 
