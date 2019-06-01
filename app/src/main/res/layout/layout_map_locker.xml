@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<androidx.cardview.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardView_locker"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="@color/Battleship_Gray"
+    android:clickable="true"
+    android:focusable="true"
+    android:visibility="invisible"
+    tools:showIn="@layout/fragment_driver_map">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--<ProgressBar-->
+        <!--android:id="@+id/progressOnlineStatus"-->
+        <!--style="@style/Widget.AppCompat.ProgressBar"-->
+        <!--android:layout_width="30dp"-->
+        <!--android:layout_height="30dp"-->
+        <!--android:visibility="gone" />-->
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

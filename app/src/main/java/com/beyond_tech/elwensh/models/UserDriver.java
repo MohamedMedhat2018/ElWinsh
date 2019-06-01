@@ -1,18 +1,38 @@
 package com.beyond_tech.elwensh.models;
 
-public class Driver {
+import com.beyond_tech.elwensh.factory.UserFactory;
+
+public class UserDriver  {
     private String driverEmail;
     private String driverPassword;
     private String driverFireId;
     private boolean driverStatus;
+    private String phoneNumber;
+    private String fullName;
 
-    public Driver(String driverEmail, String driverFireId, boolean driverStatus) {
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public UserDriver(String driverEmail, String driverFireId, boolean driverStatus) {
         this.driverEmail = driverEmail;
         this.driverFireId = driverFireId;
         this.driverStatus = driverStatus;
     }
 
-    public Driver() {
+    public UserDriver() {
 
     }
 
